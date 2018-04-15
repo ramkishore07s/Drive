@@ -1,0 +1,13 @@
+from setuptools import setup
+
+setup(
+    name='drive',
+    packages=['app'],
+    include_package_data=True,
+    install_requires=[
+        'flask',
+    ],
+)
+
+export FLASK_APP=app
+export FLASK_DEBUG=true
