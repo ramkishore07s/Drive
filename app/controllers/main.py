@@ -17,4 +17,4 @@ MAIN = Blueprint('main', __name__,
 @MAIN.route('/baa')
 def show():
     '''show'''
-    return "baa"
+    return "You have logged in"

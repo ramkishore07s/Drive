@@ -5,13 +5,13 @@
     <div class ="transbox"></div>
     <span class="myDrive">MyDrive</span>
     <div class="register">		
-    <div class="forSignIn">Sign In</div>
+    <div class="forSignIn">Log In</div>
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-            {% for error in form.username.errors %}
+            {{ form.email.label }}<br>
+            {{ form.email(size=50) }}<br>
+            {% for error in form.email.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
@@ -26,7 +26,7 @@
         <p>{{ form.submit() }}</p>
 	 <div>
             Not registered?
-            <a href="/signUp">Sign Up</a>
+            <a href="/signup">Sign Up</a>
         </div>
     </form>
 </div>

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block body %}
+<body>
+    <div class="background">
+	<div class ="transbox"></div>
+	<span class="myDrive">MyDrive</span>
+	<div class="register">		
+	    <div class="forSignIn">Sign Up</div>
+	    <form action="" method="post">
+		{{ form.hidden_tag() }}
+		<p>
+		    {{ form.username.label }}<br>
+		    {{ form.username(size=32) }}<br>
+		    {% for error in form.username.errors %}
+		    <span style="color: red;">[{{ error }}]</span>
+		    {% endfor %}
+		</p>
+		<p>
+		    {{ form.password.label }}<br>
+		    {{ form.password(size=32) }}<br>
+		    {% for error in form.password.errors %}
+		    <span style="color: red;">[{{ error }}]</span>
+		    {% endfor %}
+		</p>
+		<p>
+		    {{ form.confirm_password.label }}<br>
+		    {{ form.confirm_password(size=32) }}<br>
+		    {% for error in form.confirm_password.errors %}
+		    <span style="color: red;">[{{ error }}]</span>
+		    {% endfor %}
+		</p>
+		<div>
+		    Not registered?
+		    <a href="/signUp">Sign Up</a>
+		</div>
+	    </form>
+	</div>
+    </div>
+</body>
+</html>
+{% endblock %}
