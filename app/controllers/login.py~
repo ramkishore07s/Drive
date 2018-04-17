@@ -1,5 +1,4 @@
-'''not decided
-'''
+''' user login, signup'''
 
 from flask import Blueprint, render_template, abort
 from jinja2 import TemplateNotFound
@@ -11,10 +10,11 @@ from app.models.user import User
 
 from app.controllers.forms.login import LoginForm
 
-MAIN = Blueprint('main', __name__,
+AUTH = Blueprint('auth', __name__,
                  template_folder='templates')
 
-@MAIN.route('/baa')
-def show():
-    '''show'''
-    return "baa"
+@AUTH.route('/login')
+def login():
+    '''login'''
+    form = LoginForm()
+    return render_template("login.html", form=form, title='Log in')
