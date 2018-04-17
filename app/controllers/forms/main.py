@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, Email
 from flask_wtf.file import FileField
 
 class UploadFile(FlaskForm):
-    file_ = FileField()
+    file_ = FileField('file', validators=[DataRequired()])
     submit = SubmitField('Add file')
 
 class CreateDir(FlaskForm):

@@ -41,7 +41,7 @@ def show():
     '''show'''
     if current_user.is_authenticated:
         if not "current_dir" in session:
-            session["current_dir"] = APP.config["UPLOAD_FOLDER"] + "/" + str(current_user.id)
+            session["current_dir"] = str(current_user.id)
         return render_template("main.html",
                                u_form=UploadFile(),
                                d_form=CreateDir(),
