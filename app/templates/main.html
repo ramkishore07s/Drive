@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block body %}
+<form action={{ url_for("main.upload_file") }} method="post" enctype="multipart/form-data">
+    {{ u_form.hidden_tag() }}
+    <p>{{ u_form.file_() }}</p>
+    <p>{{ u_form.submit() }}</p>
+</form>
+<br>
+<br>
+<form action={{url_for("main.create_dir")}} method="post">
+    {{ d_form.hidden_tag() }}
+    <p>
+	{{ d_form.dir_name.label }}<br>
+	{{ d_form.dir_name(size=10) }}<br>
+    </p>
+    <p>{{ d_form.submit() }}</p>
+</form>
+<br>
+<br>
+{% endblock %}

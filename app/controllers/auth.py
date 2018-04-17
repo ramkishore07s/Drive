@@ -1,13 +1,13 @@
 ''' user login, signup'''
+import os
 
 from flask import Blueprint, render_template, abort, redirect, flash, url_for
 from flask_login import current_user, login_user, logout_user
 
 from jinja2 import TemplateNotFound
 
-from app import DB, LOGIN
+from app import DB, LOGIN, APP
 
-from app.models.temp import Temp
 from app.models.user import User
 
 from app.controllers.forms.auth import LoginForm, SignupForm
@@ -24,7 +24,7 @@ def load_user(id):
 def login():
     '''login'''
     if current_user.is_authenticated:
-        return redirect('/baa')
+        return redirect('/mydrive')
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -39,16 +39,24 @@ def login():
 def signup():
     '''signup'''
     if current_user.is_authenticated:
-        return redirect('/baa')
+        return redirect('/mydrive')
     form = SignupForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is None:
             if form.password.data == form.confirm_password.data:
+
+                # -------------- create user ---------------
+                
                 new_user = User(form.username.data, form.email.data, form.password.data)
                 DB.session.add(new_user)
                 DB.session.commit()
-                return redirect('auth.login')
+
+                # ------------- create drive --------------
+
+                user_space = os.makedirs(APP.config['UPLOAD_FOLDER'] + "/" + str(new_user.id))
+                   
+                return redirect(url_for('auth.login'))
             flash("passwords don't match")
         else:
             flash("email already taken")
@@ -56,5 +64,6 @@ def signup():
             
 @AUTH.route('/logout')
 def logout():
+    '''logout'''
     logout_user()
     return redirect(url_for("auth.login"))

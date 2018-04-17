@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block body %}
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    {{ form.file }}
+    <p>{{ form.submit() }}</p>
+    <div>
+        Not registered?
+        <a href="/signup">Sign Up</a>
+    </div>
+</form>

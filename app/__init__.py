@@ -18,6 +18,11 @@ APP = Flask(__name__)
 
 APP.config.from_object(__name__)
 APP.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+UPLOAD_FOLDER = os.path.join(APP_ROOT, 'data')
+APP.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 APP.config.update(dict(
     SECRET_KEY='development key',
     USERNAME='admin',

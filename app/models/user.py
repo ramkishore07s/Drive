@@ -6,7 +6,7 @@ class User(UserMixin, DB.Model):
     __table_args__ = {'extend_existing': True}
     id = DB.Column('User_id', DB.Integer, primary_key = True)
     name = DB.Column(DB.String(100))
-    email = DB.Column(DB.String(50))
+    email = DB.Column(DB.String(50), unique=True, nullable=False)
     password_hash = DB.Column(DB.String(128))
 
     def __init__(self, name, email, password):
