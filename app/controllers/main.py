@@ -2,7 +2,7 @@
 import os
 
 from flask import Blueprint, render_template, redirect, flash, request,\
-    session, jsonify, json
+    session, jsonify, json, send_file
 from flask_login import current_user
 from werkzeug.utils import secure_filename
 
@@ -60,7 +60,6 @@ def show():
     if current_user.is_authenticated:
         if not "current_dir" in session:
             session["current_dir"] = "/" + str(current_user.id)
-        flash(current_directory())
         return render_template("main.html",
                                u_form=UploadFile(),
                                d_form=CreateDir(),
@@ -147,24 +146,10 @@ def get_files():
 
 # ----------------------------- change dir ------------------------------
 
-
-# Accepts a json post request with field change_dir = directory name
-# ''' example request:
-# var xhr = new XMLHttpRequest();
-# var url = "/changedir";
-# xhr.open("POST", url, true);
-# xhr.setRequestHeader("Content-Type", "application/json");
-# xhr.onreadystatechange = function () {
-#     if (xhr.readyState === 4 && xhr.status === 200) {
-#         var json = JSON.parse(xhr.responseText);
-#         console.log(json);
-#     }
-# };
-# var data = JSON.stringify({"change_dir":"documents"});
-# xhr.send(data);
-# '''
-
-# add back function
+# .. => go back
+# . => root folder of user
+# other names => cd if exists
+# send post request with json containing "change_dir":"<directory name>"
 
 @MAIN.route('/changedir', methods=['POST'])
 def change_dir():

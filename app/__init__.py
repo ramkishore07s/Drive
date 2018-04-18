@@ -22,6 +22,7 @@ APP.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = os.path.join(APP_ROOT, 'data')
 APP.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+APP.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 APP.config.update(dict(
     SECRET_KEY='development key',
