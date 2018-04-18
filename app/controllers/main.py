@@ -23,7 +23,7 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def current_directory():
-    return APP.config["UPLOAD_FOLDER"] + "/" + session["current_dir"]
+    return APP.config["UPLOAD_FOLDER"] + session["current_dir"]
 
 def get_size(start_path):
     total_size = 0
@@ -33,6 +33,24 @@ def get_size(start_path):
             total_size += os.path.getsize(fp)
     return total_size
 
+def set_cur_dir(dir_name):
+    if dir_name == ".":
+        session["current_dir"] = "/" + str(current_user.id)
+    elif dir_name == "..":
+        rem = session["current_dir"].split("/")
+        if len(rem) > 0:
+            rem.pop()
+        session["current_dir"] = ""
+        for file in rem[1:]:
+            session["current_dir"] += "/" + file
+    elif dir_name != "":
+        session["current_dir"] += "/" + dir_name
+
+    # protection, if tries to go back
+    
+    if len(session["current_dir"]) <= 1:
+        session["current_dir"] = "/" + str(current_user.id)
+
 
 # ----------------------------- main view --------------------------------
 
@@ -41,7 +59,8 @@ def show():
     '''show'''
     if current_user.is_authenticated:
         if not "current_dir" in session:
-            session["current_dir"] = str(current_user.id)
+            session["current_dir"] = "/" + str(current_user.id)
+        flash(current_directory())
         return render_template("main.html",
                                u_form=UploadFile(),
                                d_form=CreateDir(),
@@ -58,7 +77,7 @@ def upload_file():
         flash(str(request.files['file_'].filename))
         file = request.files['file_']
         filename = secure_filename(file.filename)
-        file.save(os.path.join(session["current_dir"], filename))
+        file.save(os.path.join(current_directory(), filename))
     else:
         flash("error")
     return redirect("mydrive")
@@ -150,8 +169,10 @@ def get_files():
 @MAIN.route('/changedir', methods=['POST'])
 def change_dir():
     dir_name = request.json["change_dir"]
-    if dir_name in os.listdir(current_directory()):
-        session["current_dir"] += "/" + dir_name
-        return jsonify(result="success")
+    if dir_name == ".." or dir_name == "." or dir_name in os.listdir(current_directory()):
+        set_cur_dir(dir_name)
+        return jsonify(result="success",
+                       direc=str(session["current_dir"]),
+                       cur=current_directory())
     else:
         return jsonify(result="failed")
