@@ -1,8 +1,8 @@
 '''main page controllers'''
-import os
+import os, sys
 
 from flask import Blueprint, render_template, redirect, flash, request,\
-    session, jsonify, json, send_file
+    session, jsonify, json, send_file, send_from_directory
 from flask_login import current_user
 from werkzeug.utils import secure_filename
 
@@ -154,10 +154,36 @@ def get_files():
 @MAIN.route('/changedir', methods=['POST'])
 def change_dir():
     dir_name = request.json["change_dir"]
-    if dir_name == ".." or dir_name == "." or dir_name in os.listdir(current_directory()):
+    if (dir_name == ".." or dir_name == "." 
+        or dir_name in os.listdir(current_directory())) and os.path.isdir(current_directory() + "/" + dir_name):
         set_cur_dir(dir_name)
         return jsonify(result="success",
                        direc=str(session["current_dir"]),
                        cur=current_directory())
     else:
         return jsonify(result="failed")
+    
+    
+# ------------------------ get particular file --------------------------
+
+@MAIN.route('/getfile/<filename>', methods=['GET'])
+def get_file(filename):
+    abs_name = current_directory() + "/" + filename
+    if filename in os.listdir(current_directory()) and os.path.isfile(abs_name):
+        return send_from_directory(current_directory(), filename)
+    else:
+        return render_template("404.html")
+
+
+
+
+
+
+
+
+# -------------------------- delete file --------------------------------
+
+
+
+
+
