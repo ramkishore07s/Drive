@@ -21,7 +21,10 @@ APP.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = os.path.join(APP_ROOT, 'data')
+SHARED_FOLDER = os.path.join(APP_ROOT, 'shared')
+
 APP.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+APP.config['SHARED_FOLDER'] = SHARED_FOLDER
 APP.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 APP.config.update(dict(
