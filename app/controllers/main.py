@@ -82,9 +82,8 @@ def upload_file():
         file = request.files['file']
         filename = secure_filename(file.filename)
         file.save(os.path.join(current_directory(), filename))
-        flash("uploaded " + str(request.files['file'].filename))
     else:
-        flash("error")
+        flash("error uploading file")
     return redirect("mydrive")
 
 
@@ -98,14 +97,13 @@ def create_dir():
     '''create dir in current dir'''
     form = CreateDir(request.form)
     if form.validate_on_submit():
-        flash(form.dir_name.data)
         dir_name = form.dir_name.data
         try:
             os.makedirs(current_directory() + "/" + dir_name)
         except OSError:
-            flash("cannot create dir")
+            flash("Cannot create dir")
     else:
-        flash("error cd")
+        flash("form error")
     return redirect("mydrive")
 
 
@@ -200,7 +198,7 @@ def delete_file():
                 if os.path.isfile(abs_path):
                     os.unlink(current_directory() + "/" + filename)
                 elif os.path.isdir(abs_path):
-                    os.rmdir(abs_path)
+                    shutil.rmtree(abs_path)
                 return jsonify(result="success")
             return jsonify(result="failed")
         except:

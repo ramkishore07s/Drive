@@ -16,6 +16,8 @@ var change_folder = function(folder) {
 var fill_in_files = function(data, id) {
     list = document.getElementById(id);
     list.innerHTML = "";
+    if(data.length == 0)
+	list.innerHTML = "<h2>This folder has no files</h2>";
     for(var i=0; i<data.length; ++i) {
 	li = document.createElement('li');
 	img = document.createElement('img');
@@ -41,6 +43,8 @@ var fill_in_sizes = function(data, id) {
 var fill_in_folders = function(data, id) {
     list = document.getElementById(id);
     list.innerHTML = "";
+    if(data.length == 0)
+	list.innerHTML = "<h2>This folder has no folders</h2>";
     for(var i=0; i<data.length; ++i) {
 	li = document.createElement('li');
 	img = document.createElement('img');
@@ -62,7 +66,8 @@ var ls = function() {
 	if (xhr.readyState === 4 && xhr.status === 200) {
             var json = JSON.parse(xhr.responseText);
 //            console.log(json);
-//	    console.log(json.files);
+	    console.log(json.files);
+	    console.log(json.folders);
 	    fill_in_files(JSON.parse(json.files), "files");
 	    fill_in_folders(JSON.parse(json.folders), "folders");
 	    fill_in_sizes(JSON.parse(json.file_size), "file_sizes");
@@ -147,3 +152,5 @@ var submitfunction = function() {
 }
 
 document.getElementById('delbutton').onclick=submitfunction
+
+cd(".");
