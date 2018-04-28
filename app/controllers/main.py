@@ -1,5 +1,7 @@
 '''main page controllers'''
-import os, sys
+import os
+import sys
+import shutil
 
 from flask import Blueprint, render_template, redirect, flash, request,\
     session, jsonify, json, send_file, send_from_directory
@@ -122,12 +124,13 @@ def get_files():
         
         for file in os.listdir(current_directory()):
             path = current_directory() + "/" + file
-            if os.path.isfile(path):
-                files.append(file)
-                file_size.append(os.stat(path).st_size)
-            if os.path.isdir(path):
-                folders.append(file)
-                folder_size.append(get_size(path))
+            if file != ".DS_Store":
+                if os.path.isfile(path):
+                    files.append(file)
+                    file_size.append(os.stat(path).st_size)
+                if os.path.isdir(path):
+                    folders.append(file)
+                    folder_size.append(get_size(path))
 
         # convert everything to json dumps
 
@@ -153,13 +156,14 @@ def get_files():
 
 @MAIN.route('/changedir', methods=['POST'])
 def change_dir():
-    dir_name = request.json["change_dir"]
-    if (dir_name == ".." or dir_name == "." 
-        or dir_name in os.listdir(current_directory())) and os.path.isdir(current_directory() + "/" + dir_name):
-        set_cur_dir(dir_name)
-        return jsonify(result="success",
-                       direc=str(session["current_dir"]),
-                       cur=current_directory())
+    if current_user.is_authenticated:
+        dir_name = request.json["change_dir"]
+        if (dir_name == ".." or dir_name == "." 
+            or dir_name in os.listdir(current_directory())) and os.path.isdir(current_directory() + "/" + dir_name):
+            set_cur_dir(dir_name)
+            return jsonify(result="success",
+                           direc=str(session["current_dir"]),
+                           cur=current_directory())
     else:
         return jsonify(result="failed")
     
@@ -168,16 +172,32 @@ def change_dir():
 
 @MAIN.route('/getfile/<filename>', methods=['GET'])
 def get_file(filename):
-    abs_name = current_directory() + "/" + filename
-    if filename in os.listdir(current_directory()) and os.path.isfile(abs_name):
-        return send_from_directory(current_directory(), filename)
+    if current_user.is_authenticated:
+        abs_name = current_directory() + "/" + filename
+        if filename in os.listdir(current_directory()) and os.path.isfile(abs_name):
+            return send_from_directory(current_directory(), filename)
     else:
         return render_template("404.html")
 
 
 # -------------------------- delete file --------------------------------
+#
+# post json with field { "del_file": <file/folder>
+#
 
-
-
-
+@MAIN.route('/delete', methods=['POST'])
+def delete_file():
+    if current_user.is_authenticated:
+        try:
+            filename = request.json["del_file"]
+            abs_path = current_directory() + "/" + filename
+            if os.path.isfile(abs_path):
+                os.unlink(current_directory() + "/" + filename)
+            elif os.path.isdir(abs_path):
+                shutil.rmtree(abs_path)
+            return jsonify(result="success")
+        except:
+            return jsonify(result="failed")
+    return redirect("login")
+    
 

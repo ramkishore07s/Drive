@@ -53,8 +53,8 @@ var ls = function() {
     xhr.onreadystatechange = function () {
 	if (xhr.readyState === 4 && xhr.status === 200) {
             var json = JSON.parse(xhr.responseText);
-            console.log(json);
-	    console.log(json.files);
+//            console.log(json);
+//	    console.log(json.files);
 	    fill_in_files(JSON.parse(json.files), "files");
 	    fill_in_folders(JSON.parse(json.folders), "folders");
 	    fill_in_sizes(JSON.parse(json.file_size), "file_sizes");
@@ -79,5 +79,20 @@ var cd = function(folder) {
     xhr.send(data);
 };
 
-
 ls();
+
+var delete_file = function(file) {
+    var xhr = new XMLHttpRequest();
+    var url = "/delete";
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+	if (xhr.readyState === 4 && xhr.status === 200) {
+            var json = JSON.parse(xhr.responseText);
+	    
+	    ls();
+	}
+    };
+    var data = JSON.stringify({"del_file":file});
+    xhr.send(data);
+};
