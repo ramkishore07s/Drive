@@ -175,12 +175,6 @@ def get_file(filename):
         return render_template("404.html")
 
 
-
-
-
-
-
-
 # -------------------------- delete file --------------------------------
 
 
