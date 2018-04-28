@@ -19,6 +19,11 @@ AUTH = Blueprint('auth', __name__,
 def load_user(id):
     return User.query.get(int(id))
 
+@AUTH.context_processor
+def user_auth():
+    def is_logged_in():
+        return current_user.is_authenticated
+    return dict(is_logged_in=is_logged_in)
 
 @AUTH.route('/login', methods=['GET', 'POST'])
 def login():

@@ -53,6 +53,11 @@ def set_cur_dir(dir_name):
     if len(session["current_dir"]) <= 1:
         session["current_dir"] = "/" + str(current_user.id)
 
+@MAIN.context_processor
+def user_auth():
+    def is_logged_in():
+        return current_user.is_authenticated
+    return dict(is_logged_in=is_logged_in)
 
 # ----------------------------- main view --------------------------------
 
@@ -189,6 +194,7 @@ def delete_file():
     if current_user.is_authenticated:
         try:
             filename = request.json["del_file"]
+            print(filename)
             abs_path = current_directory() + "/" + filename
             if filename in os.listdir(current_directory()):
                 if os.path.isfile(abs_path):

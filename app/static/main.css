@@ -1,0 +1,141 @@
+.container {
+  display: flex;
+}
+.container > div {
+    flex: 1;
+}
+ul#files {
+    max-width: 1400px;
+    min-width: 1000px;
+    list-style: none;
+    padding-top: 10px;
+}
+ul#files li {
+    display: inline;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 20px;
+}
+ul#folders {
+    max-width: 1400px;
+    min-width: 1000px;
+    list-style: none;
+    padding-top: 10px;
+}
+ul#folders li {
+    display: inline;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 20px;
+}
+/* ul#folders li:hover { */
+/*     display: inline; */
+/*     padding-left: 10px; */
+/*     padding-right: 10px; */
+/*     font-size: 25px; */
+/*     background-color:black; */
+/*     color:white; */
+/* } */
+li {cursor: pointer;}
+a {cursor: pointer;}
+p#back {cursor: pointer;}
+input {cursor: pointer;}
+
+Button {
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+input {
+    height: 40px;
+    width: 100%;
+}
+.btn-group button {
+    background-color: #4CAF50; /* Green background */
+    border: 1px solid green; /* Green border */
+    color: white; /* White text */
+    padding: 10px 24px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+    width: 33.3%;
+}
+
+.btn-group button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+    background-color: #3e8e41;
+}
+input[type=submit], Button#delbutton {
+    width: 100%;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    font-size: 20px;
+}
+
+input[type=submit]:hover, Button#delbutton:hover {
+    background-color: #3e8e41; /* Green */
+    color: white;
+}
+p {
+    font-size: 25px;
+}
+input[type=file] {
+    font-size: 25px;
+}
+div#canvas {
+    border: 3px solid green;
+    width: 99%;
+}
+/* body { */
+/*     background-color: black; */
+/*     color: white; */
+/* } */
+
+
+Button#logout {
+    float: right;
+    width: 200px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+Button#logout:hover {
+    background-color: red; /* Green */
+    color: white;
+}
+img {
+    cursor: pointer;
+}
+div#canvas > div {
+    margin-top: 20px;
+    margin-left: 20px;
+    bottom: 20px;
+}
+
+.fileimg img {
+    width:100px;
+}
+.fileimg img:hover {
+    width:110px;
+}
+.myDrive{
+    font-family: 'Product Sans';
+line-height: 33px;
+    opacity: 0.54;
+    position: relative;
+    top: 5%;
+    left: 5%;
+    font-size: 60px;
+	color: #1E4745;
+font: 400 40px/1.667 "Open Sans", sans-serif;
+}

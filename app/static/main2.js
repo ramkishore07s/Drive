@@ -18,6 +18,10 @@ var fill_in_files = function(data, id) {
     list.innerHTML = "";
     for(var i=0; i<data.length; ++i) {
 	li = document.createElement('li');
+	img = document.createElement('img');
+	img.src = '/static/file.png';
+	img.style.width = '100px';
+	li.appendChild(img);
 	li.appendChild(document.createTextNode(data[i]));
 	list.appendChild(li);
 	li.onclick = open_file(data[i])
@@ -39,6 +43,10 @@ var fill_in_folders = function(data, id) {
     list.innerHTML = "";
     for(var i=0; i<data.length; ++i) {
 	li = document.createElement('li');
+	img = document.createElement('img');
+	img.src = '/static/folder.png';
+	img.style.width = '100px';
+	li.appendChild(img);
 	li.appendChild(document.createTextNode(data[i]));
 	list.appendChild(li);
 	li.onclick = change_folder(data[i]);
@@ -96,3 +104,46 @@ var delete_file = function(file) {
     var data = JSON.stringify({"del_file":file});
     xhr.send(data);
 };
+
+buttons = ['alt0', 'alt1', 'alt2']
+divs = ['section1', 'section2', 'section3']
+names = ['Add File', 'Create New Folder', 'Delete File/Folder']
+
+var toggle = function(id1, id2, name) {
+    return function() {
+	for(var i=0; i<3; ++i) {
+	    document.getElementById(divs[i]).style.display='none';
+	}
+	document.getElementById(id2).style.display='block';
+    };
+}
+
+buttons = ['alt0', 'alt1', 'alt2']
+divs = ['section1', 'section2', 'section3']
+names = ['Add File', 'Create New Folder', 'Delete File/Folder']
+
+for(var i=0; i<3; ++i) {
+    document.getElementById(buttons[i]).onclick = toggle(buttons[i], divs[i], names[i]);
+    document.getElementById(buttons[i]).innerHTML = names[i];
+    document.getElementById(divs[i]).style.display = 'none';
+}
+    document.getElementById(divs[0]).style.display = 'block';
+
+var submitfunction = function() {
+    file = document.getElementById('del_file_name').value;
+    console.log(file);
+    var xhr = new XMLHttpRequest();
+    var url = "/delete";
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+	if (xhr.readyState === 4 && xhr.status === 200) {
+            var json = JSON.parse(xhr.responseText);
+	    ls();
+	}
+    };
+    var data = JSON.stringify({'del_file':file})
+    xhr.send(data);
+}
+
+document.getElementById('delbutton').onclick=submitfunction
