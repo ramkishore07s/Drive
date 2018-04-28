@@ -2,7 +2,7 @@
 {% block body %}
 <form action={{ url_for("main.upload_file") }} method="post" enctype="multipart/form-data">
     {{ u_form.hidden_tag() }}
-    <p>{{ u_form.file_() }}</p>
+    <p>{{ u_form.file() }}</p>
     <p>{{ u_form.submit() }}</p>
 </form>
 <br>
@@ -17,10 +17,12 @@
 </form>
 <br>
 <br>
-<p onclick='cd("..")'>back</p>
+<p onclick='cd("..")'><b><u>BACK</u></b></p>
 <br>
-<p>files:</p>
-<ul id="files"></ul>
+<div id="file_section">
+    <p>files:</p>
+    <ul id="files"></ul>
+</div>
 <p>file sizes:</p>
 <ul id="file_sizes"></ul>
 <p>folders:</p>

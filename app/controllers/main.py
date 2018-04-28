@@ -73,12 +73,11 @@ def show():
 @MAIN.route('/upload', methods=['POST'])
 def upload_file():
     '''upload file in current directory'''
-    form = UploadFile(request.form)
-    if form.validate_on_submit():
-        flash(str(request.files['file_'].filename))
-        file = request.files['file_']
+    if 'file' in request.files:
+        file = request.files['file']
         filename = secure_filename(file.filename)
         file.save(os.path.join(current_directory(), filename))
+        flash("uploaded " + str(request.files['file'].filename))
     else:
         flash("error")
     return redirect("mydrive")
@@ -191,13 +190,13 @@ def delete_file():
         try:
             filename = request.json["del_file"]
             abs_path = current_directory() + "/" + filename
-            if os.path.isfile(abs_path):
-                os.unlink(current_directory() + "/" + filename)
-            elif os.path.isdir(abs_path):
-                shutil.rmtree(abs_path)
-            return jsonify(result="success")
+            if filename in os.listdir(current_directory()):
+                if os.path.isfile(abs_path):
+                    os.unlink(current_directory() + "/" + filename)
+                elif os.path.isdir(abs_path):
+                    os.rmdir(abs_path)
+                return jsonify(result="success")
+            return jsonify(result="failed")
         except:
             return jsonify(result="failed")
     return redirect("login")
-    
-
