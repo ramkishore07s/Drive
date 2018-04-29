@@ -37,7 +37,7 @@ APP.config.update(dict(
 APP.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 DB = SQLAlchemy(APP)
-LOGIN = LoginManager(APP)
+LOGIN = LoginManager()
 
 # ------------------------------- controller imports -----------------------------------------
 #
@@ -57,6 +57,7 @@ APP.register_blueprint(SHARED)
 
 DB.init_app(APP)
 DB.create_all()
+LOGIN.init_app(APP)
 
 @APP.route('/')
 def hello_world():

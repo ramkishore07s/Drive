@@ -66,7 +66,8 @@ def show():
         return render_template("main.html",
                                u_form=UploadFile(),
                                d_form=CreateDir(),
-                               cd_form=ChangeDir())
+                               cd_form=ChangeDir(),
+                               dir=session['current_dir'])
     return redirect("/login")
 
 # -------------------------- upload files to the current directory -------------------
@@ -169,7 +170,7 @@ def change_dir():
     else:
         return jsonify(result="failed")
     
-    
+
 # ------------------------ get particular file --------------------------
 
 @MAIN.route('/getfile/<filename>', methods=['GET'])

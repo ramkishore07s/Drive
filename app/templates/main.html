@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block body %}
 <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='main.css') }}">
+<br>
+<Button style="float: right" id="shared" onclick="window.location.href='/shared';">View Public files</Button>
+<br>
+<br>
 <div class ="btn-group">
     <br>
 <div>
@@ -18,6 +22,7 @@
     <div id="section1">
 	<form action={{ url_for("main.upload_file") }} method="post" enctype="multipart/form-data">
 	    {{ u_form.hidden_tag() }}
+	    <p>Choose a file to upload:</p>
 	    <p>{{ u_form.file() }}</p>
 	    <div float="left">
 		{{ u_form.submit() }}
@@ -55,7 +60,7 @@
 
 <div id="canvas">
     <div id="screen">
-    <img src="{{url_for('static', filename='back.png') }}" onclick="cd('..')" alt="back" width="3%">
+	<img src="{{url_for('static', filename='back.png') }}" onclick="cd('..')" alt="back" width="3%"><h2 id="current">Current Directory: {{dir}}</h2>
 
 <p style="width:100%; background-color:green; color:white">Files:</p>
 <ul id="files"></ul>

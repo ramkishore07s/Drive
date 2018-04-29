@@ -8,7 +8,7 @@ class UploadFile(FlaskForm):
     submit = SubmitField('Add file')
 
 class CreateDir(FlaskForm):
-    dir_name = StringField('Directory Name', validators=[DataRequired()])
+    dir_name = StringField('Enter the Name of Folder to be created:', validators=[DataRequired()])
     submit = SubmitField('Create Directory')
 
 class ChangeDir(FlaskForm):

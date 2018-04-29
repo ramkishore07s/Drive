@@ -84,7 +84,7 @@ var cd = function(folder) {
     xhr.onreadystatechange = function () {
 	if (xhr.readyState === 4 && xhr.status === 200) {
             var json = JSON.parse(xhr.responseText);
-	    
+	    document.getElementById('current').innerHTML = "Current Directory: " +  json.direc;
 	    ls();
 	}
     };

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Public Files:</h1>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='main.css') }}">
+<div id="canvas">
+    <div id="screen">
+	<img src="{{url_for('static', filename='back.png') }}" onclick="window.location.href='/mydrive'" alt="back" width="3%">
+
+	<p style="width:100%; background-color:green; color:white">Files:</p>
+	<ul id="files">
+	    {% for file in folders: %}
+	    <li onclick="window.location.href =('/shared/{{file}}');"><img width="100px" src="/static/folder.png">{{ file }}</li>
+	    {% endfor %}
+	</ul>
+
+    </div>
+</div>
+<script type="text/javascript" src={{ url_for('static', filename="shared.js")}}></script>
+
+{% endblock %}
