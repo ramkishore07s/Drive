@@ -62,16 +62,7 @@ LOGIN.init_app(APP)
 @APP.route('/')
 def hello_world():
     '''hello world'''
-    session['log'] = True
-    if not session['log']:
-        return render_template("app.html")
-    else:
-        session['log'] = not session['log']
-        return "hellooo"
-
-    return render_template("app.html")
-
-
+    return redirect("/login")
 # ------------------------------- error handlers ---------------------------------------------
 
 @APP.errorhandler(404)
