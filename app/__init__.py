@@ -45,10 +45,12 @@ LOGIN = LoginManager(APP)
 
 from app.controllers.main import MAIN
 from app.controllers.auth import AUTH
+from app.controllers.share import SHARED
 # Registering imported Blueprints
 
 APP.register_blueprint(MAIN)
 APP.register_blueprint(AUTH)
+APP.register_blueprint(SHARED)
 
 
 # ------------------------------- Initialising DB -------------------------------------------

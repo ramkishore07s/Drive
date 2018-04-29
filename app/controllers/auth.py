@@ -60,6 +60,7 @@ def signup():
                 # ------------- create drive --------------
 
                 user_space = os.makedirs(APP.config['UPLOAD_FOLDER'] + "/" + str(new_user.id))
+                user_shared = os.makedirs(APP.config['UPLOAD_FOLDER'] + '/' + str(new_user.id) + '/' + 'public')
                    
                 return redirect(url_for('auth.login'))
             flash("passwords don't match")

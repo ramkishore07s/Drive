@@ -95,7 +95,11 @@ def create_dir():
     if form.validate_on_submit():
         dir_name = form.dir_name.data
         try:
-            os.makedirs(current_directory() + "/" + dir_name)
+            if not dir_name == 'public':
+                os.makedirs(current_directory() + "/" + dir_name)
+            else:
+                flash('The name is reserved')
+                raise OSError('reserved name')
         except OSError:
             flash("Cannot create dir")
     else:
@@ -193,8 +197,10 @@ def delete_file():
             if filename in os.listdir(current_directory()):
                 if os.path.isfile(abs_path):
                     os.unlink(current_directory() + "/" + filename)
-                elif os.path.isdir(abs_path):
+                elif os.path.isdir(abs_path) and not filename == 'public':
                     shutil.rmtree(abs_path)
+                else:
+                    return jsonify(result='failed')
                 return jsonify(result="success")
             return jsonify(result="failed")
         except:
