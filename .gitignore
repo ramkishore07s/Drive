@@ -8,7 +8,7 @@ __pycache__/
 *#*
 
 # user data files
-data/*
+
 
 # C extensions
 *.so
