@@ -1,4 +1,4 @@
 # ITWS Project: Drive
 
-Go through Readme.pdf
-
+Secure simple web-server for cloud services.
+For more information: go through readme.pdf
