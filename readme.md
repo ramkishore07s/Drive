@@ -1,4 +1,4 @@
 # ITWS Project: Drive
 
-Secure simple web-server for cloud services.
+Simple secure web-server for cloud storage services.
 For more information: go through readme.pdf
